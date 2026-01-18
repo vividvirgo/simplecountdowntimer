@@ -1,1 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>About — SimpleCountdownTimer</title>
+  <meta name="description" content="About SimpleCountdownTimer — a fast, free countdown timer that runs in your browser." />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">⏳</div>
+        <div>
+          <div class="brand-title">SimpleCountdownTimer</div>
+          <div class="brand-sub">Fast • Free • No login</div>
+        </div>
+      </div>
+
+      <nav>
+        <a href="./index.html">Tool</a>
+        <a href="./about.html" aria-current="page">About</a>
+        <a href="./contact.html">Contact</a>
+        <a href="./privacy.html">Privacy</a>
+        <a href="./terms.html">Terms</a>
+      </nav>
+    </header>
+
+    <div class="ad top" aria-label="ad-slot">Ad Slot (Top Leaderboard)</div>
+
+    <section class="card">
+      <h1>About</h1>
+      <p class="sub">
+        SimpleCountdownTimer is a lightweight online countdown timer built for speed, clarity, and simplicity.
+      </p>
+
+      <div class="small">
+        <p>
+          The timer runs directly in your browser — no downloads, no accounts, and no complicated settings.
+          Whether you’re cooking, studying, working, or running an activity, the goal is the same:
+          <strong>start a timer fast and get back to what you’re doing.</strong>
+        </p>
+
+        <p>
+          We aim to keep the experience clean and user-friendly, especially on mobile.
+        </p>
+
+        <p>
+          If you have feedback or feature requests, we’d love to hear from you.
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      <div>© <span id="year"></span> SimpleCountdownTimer</div>
+      <div class="small">Free online countdown timer</div>
+    </footer>
+  </div>
+
+  <script>
+    const y = document.getElementById("year");
+    if (y) y.textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
 
