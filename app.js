@@ -208,3 +208,23 @@ btnSound.addEventListener("click", toggleSound);
   statusOut.textContent = "Ready.";
   setButtons();
 })();
+document.addEventListener("keydown", (e) => {
+  const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : "";
+  const isTyping =
+    tag === "input" || tag === "textarea" || tag === "select" || e.target.isContentEditable;
+
+  if (isTyping) return; // don't hijack keys while user types
+
+  // Space toggles start/pause
+  if (e.code === "Space") {
+    e.preventDefault(); // prevents page scrolling
+    toggleStartPause(); // you will implement or connect this function below
+  }
+
+  // R resets
+  if (e.key.toLowerCase() === "r") {
+    e.preventDefault();
+    resetTimer();
+  }
+});
+
