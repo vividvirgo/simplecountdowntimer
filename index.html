@@ -3,239 +3,120 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SimpleCountdownTimer — Free Online Countdown</title>
-  <meta name="description" content="Start a clean online countdown timer in seconds. Presets, custom time, and a shareable link." />
-  <style>
-    :root { --bg:#07121a; --card:#0b1c2a; --muted:#86a9c2; --text:#e9f6ff; --accent:#35d0ba; --accent2:#4ea1ff; }
-    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:radial-gradient(900px 600px at 10% 0%, #073248 0%, var(--bg) 55%);color:var(--text)}
-    .wrap{max-width:980px;margin:0 auto;padding:28px 18px 70px}
-    header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
-    .brand{display:flex;align-items:center;gap:10px}
-    .logo{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:grid;place-items:center;color:#041016;font-weight:900}
-    nav a{color:var(--muted);text-decoration:none;margin-left:14px;font-size:14px}
-    nav a:hover{color:var(--text)}
-    h1{font-size:36px;line-height:1.1;margin:16px 0 8px}
-    p.sub{color:var(--muted);margin:0 0 18px;max-width:60ch}
-    .ad{display:grid;place-items:center;height:90px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);color:var(--muted);font-size:13px}
-    .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}
-    @media (max-width:860px){.grid{grid-template-columns:1fr}}
-    .card{background:rgba(11,28,42,.85);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
-    .timer{display:grid;place-items:center;padding:18px;border-radius:16px;background:rgba(2,10,14,.35);border:1px dashed rgba(255,255,255,.14)}
-    .digits{font-variant-numeric:tabular-nums;font-size:56px;font-weight:900;letter-spacing:1px}
-    .meta{color:var(--muted);margin-top:6px}
-    .controls{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:12px}
-    button{border:0;border-radius:14px;padding:11px 14px;font-weight:800;cursor:pointer}
-    .btn{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#041016}
-    .btn2{background:rgba(255,255,255,.08);color:var(--text);border:1px solid rgba(255,255,255,.12)}
-    .btn2:hover{background:rgba(255,255,255,.12)}
-    .row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px}
-    @media (max-width:520px){.row{grid-template-columns:1fr}}
-    input{background:#061722;border:1px solid rgba(255,255,255,.12);color:var(--text);padding:10px 12px;border-radius:12px;outline:none;width:100%}
-    .presets{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-    .chip{padding:9px 10px;border-radius:999px;background:rgba(53,208,186,.15);border:1px solid rgba(53,208,186,.35);cursor:pointer;font-weight:750}
-    .small{font-size:12px;color:var(--muted);line-height:1.35}
-  </style>
+
+  <title>SimpleCountdownTimer — Free Online Countdown Timer</title>
+  <meta name="description" content="Start a simple online countdown timer in seconds. Presets, custom time, pause/resume, and one-click reset." />
+
+  <link rel="stylesheet" href="./styles.css" />
 </head>
+
 <body>
   <div class="wrap">
     <header>
       <div class="brand">
         <div class="logo">⏳</div>
         <div>
-          <div style="font-weight:900;letter-spacing:.2px">SimpleCountdownTimer</div>
-          <div style="font-size:12px;color:var(--muted)">Fast • clean • free</div>
+          <div class="brand-title">SimpleCountdownTimer</div>
+          <div class="brand-sub">Fast • Free • No login</div>
         </div>
       </div>
+
       <nav>
-        <a href="#timer">Timer</a>
-        <a href="#about">About</a>
-        <a href="#privacy">Privacy</a>
+        <a href="./index.html" aria-current="page">Tool</a>
+        <a href="./about.html">About</a>
+        <a href="./contact.html">Contact</a>
+        <a href="./privacy.html">Privacy</a>
+        <a href="./terms.html">Terms</a>
       </nav>
     </header>
 
-    <div class="ad">Ad Slot (Top Leaderboard)</div>
+    <!-- Top ad slot -->
+    <div class="ad top" aria-label="ad-slot">Ad Slot (Top Leaderboard)</div>
 
-    <h1 id="timer">Start a countdown in seconds.</h1>
-    <p class="sub">Choose a preset or set a custom time. Share a link that starts the same timer.</p>
+    <h1>Start a countdown in seconds.</h1>
+    <p class="sub">Pick a preset or set a custom time. Pause, resume, reset — clean and distraction-free.</p>
 
     <div class="grid">
+      <!-- LEFT: Timer -->
       <section class="card">
-        <div class="timer">
-          <div class="digits" id="digits">00:00:00</div>
-          <div class="meta" id="status">Set a time, then press Start.</div>
-          <div class="controls">
-            <button class="btn" id="start">Start</button>
-            <button class="btn2" id="pause">Pause</button>
-            <button class="btn2" id="reset">Reset</button>
-            <button class="btn2" id="share">Copy Share Link</button>
+        <div class="row toolbar">
+          <div class="row">
+            <button class="chip" data-preset="60">1 min</button>
+            <button class="chip" data-preset="300">5 min</button>
+            <button class="chip" data-preset="600">10 min</button>
+            <button class="chip" data-preset="1500">25 min</button>
+            <button class="chip" data-preset="3600">60 min</button>
+          </div>
+
+          <div class="row">
+            <button class="btn2" id="btnSound" type="button" title="Toggle alarm sound">Sound: On</button>
           </div>
         </div>
 
-        <div class="presets" aria-label="presets">
-          <div class="chip" data-s="60">1 min</div>
-          <div class="chip" data-s="300">5 min</div>
-          <div class="chip" data-s="600">10 min</div>
-          <div class="chip" data-s="1500">25 min</div>
-          <div class="chip" data-s="3600">1 hour</div>
+        <div class="timer" role="status" aria-live="polite">
+          <div class="time" id="timeOut">00:05:00</div>
+          <div class="hint" id="statusOut">Ready.</div>
         </div>
 
-        <div class="row">
-          <div>
-            <label class="small">Hours</label>
-            <input id="h" type="number" min="0" value="0" />
+        <div class="controls">
+          <div class="row">
+            <div class="field">
+              <label for="mins">Minutes</label>
+              <input id="mins" inputmode="numeric" type="number" min="0" placeholder="5" />
+            </div>
+            <div class="field">
+              <label for="secs">Seconds</label>
+              <input id="secs" inputmode="numeric" type="number" min="0" max="59" placeholder="0" />
+            </div>
+            <button class="btn" id="btnSet" type="button">Set</button>
           </div>
-          <div>
-            <label class="small">Minutes</label>
-            <input id="m" type="number" min="0" value="5" />
-          </div>
-          <div>
-            <label class="small">Seconds</label>
-            <input id="s" type="number" min="0" value="0" />
-          </div>
-        </div>
 
-        <div class="small" style="margin-top:10px">
-          Tip: This runs in your browser — no account required.
+          <div class="row actions">
+            <button class="btn" id="btnStart" type="button">Start</button>
+            <button class="btn2" id="btnPause" type="button" disabled>Pause</button>
+            <button class="btn2" id="btnReset" type="button" disabled>Reset</button>
+            <button class="btn2" id="btnShare" type="button">Copy Link</button>
+          </div>
+
+          <p class="small">
+            Tip: share a preset timer link with friends (e.g., 5-minute timer). Works on mobile.
+          </p>
         </div>
       </section>
 
+      <!-- RIGHT: Sidebar -->
       <aside class="card">
-        <div class="ad" style="height:250px;margin-bottom:12px">Ad Slot (Inline 300×250)</div>
-        <h3 style="margin:6px 0 8px">Perfect for</h3>
-        <ul style="margin:0;padding-left:18px;color:var(--muted);line-height:1.55">
-          <li>Cooking timers</li>
-          <li>Study sprints</li>
-          <li>Work breaks</li>
+        <div class="ad inline">Ad Slot (Inline 300×250)</div>
+
+        <h3>Popular uses</h3>
+        <ul class="muted-list">
+          <li>Cooking & baking</li>
+          <li>Study sessions</li>
+          <li>Work sprints</li>
+          <li>Fitness intervals</li>
           <li>Classroom activities</li>
         </ul>
-        <div class="small" style="margin-top:12px">
-          Optional later: sounds, full-screen mode, and Pomodoro presets.
+
+        <div class="small" style="margin-top:14px">
+          Want to add a “Full screen” mode later? Easy. This MVP is intentionally simple.
         </div>
       </aside>
     </div>
 
-    <section class="card" id="about" style="margin-top:16px">
-      <h3 style="margin:0 0 8px">About</h3>
-      <div class="small">SimpleCountdownTimer is a lightweight web timer. It’s designed to load instantly and stay out of your way.</div>
-    </section>
+    <div class="ad footer">Ad Slot (Footer)</div>
 
-    <section class="card" id="privacy" style="margin-top:16px">
-      <h3 style="margin:0 0 8px">Privacy</h3>
-      <div class="small">No accounts. No tracking by default. If you enable ads/analytics later, disclose it here (AdSense requirement).</div>
-    </section>
-
-    <div class="ad" style="margin-top:16px;height:100px">Ad Slot (Footer)</div>
-    <div class="small" style="margin-top:12px">© <span id="year"></span> SimpleCountdownTimer</div>
+    <footer>
+      <div>© <span id="year"></span> SimpleCountdownTimer</div>
+      <div class="small">Free online countdown timer</div>
+    </footer>
   </div>
 
-  <script>
-    const digits = document.getElementById("digits");
-    const statusEl = document.getElementById("status");
-    const hEl = document.getElementById("h");
-    const mEl = document.getElementById("m");
-    const sEl = document.getElementById("s");
+  <div class="toast" id="toast">Copied!</div>
 
-    let totalSeconds = 0;
-    let remaining = 0;
-    let running = false;
-    let t = null;
+  <audio id="beep" preload="auto">
+    <source src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAIlYAAESsAAACABAAZGF0YQAAAAA=" type="audio/wav">
+  </audio>
 
-    function fmt(n){ return String(n).padStart(2,"0"); }
-    function render(sec){
-      const hh = Math.floor(sec/3600);
-      const mm = Math.floor((sec%3600)/60);
-      const ss = sec%60;
-      digits.textContent = `${fmt(hh)}:${fmt(mm)}:${fmt(ss)}`;
-      document.title = `${digits.textContent} — SimpleCountdownTimer`;
-    }
-
-    function readInputs(){
-      const h = Math.max(0, parseInt(hEl.value||"0",10));
-      const m = Math.max(0, parseInt(mEl.value||"0",10));
-      const s = Math.max(0, parseInt(sEl.value||"0",10));
-      return h*3600 + m*60 + s;
-    }
-
-    function setTimer(sec){
-      totalSeconds = Math.max(0, sec|0);
-      remaining = totalSeconds;
-      running = false;
-      if(t){ clearInterval(t); t=null; }
-      render(remaining);
-      statusEl.textContent = "Ready. Press Start.";
-    }
-
-    function tick(){
-      if(!running) return;
-      remaining = Math.max(0, remaining - 1);
-      render(remaining);
-      if(remaining === 0){
-        running = false;
-        clearInterval(t); t=null;
-        statusEl.textContent = "Time’s up!";
-        try { navigator.vibrate?.(200); } catch(e){}
-      }
-    }
-
-    document.getElementById("start").addEventListener("click", ()=>{
-      if(!running){
-        if(remaining === 0){
-          setTimer(readInputs());
-        }
-        if(remaining === 0) return;
-        running = true;
-        statusEl.textContent = "Running…";
-        if(!t) t = setInterval(tick, 1000);
-      }
-    });
-
-    document.getElementById("pause").addEventListener("click", ()=>{
-      running = false;
-      statusEl.textContent = "Paused.";
-    });
-
-    document.getElementById("reset").addEventListener("click", ()=>{
-      setTimer(readInputs());
-    });
-
-    document.querySelectorAll(".chip").forEach(chip=>{
-      chip.addEventListener("click", ()=>{
-        const sec = parseInt(chip.dataset.s,10);
-        const hh = Math.floor(sec/3600);
-        const mm = Math.floor((sec%3600)/60);
-        const ss = sec%60;
-        hEl.value = hh; mEl.value = mm; sEl.value = ss;
-        setTimer(sec);
-      });
-    });
-
-    document.getElementById("share").addEventListener("click", async ()=>{
-      const sec = remaining > 0 ? remaining : readInputs();
-      const url = new URL(window.location.href);
-      url.searchParams.set("t", String(sec));
-      try{
-        await navigator.clipboard.writeText(url.toString());
-        statusEl.textContent = "Share link copied!";
-      } catch(e){
-        statusEl.textContent = "Couldn’t copy. You can manually copy the URL.";
-      }
-    });
-
-    // Load shared timer from ?t=SECONDS
-    const params = new URLSearchParams(window.location.search);
-    const tParam = parseInt(params.get("t")||"",10);
-    if(Number.isFinite(tParam) && tParam > 0){
-      const hh = Math.floor(tParam/3600);
-      const mm = Math.floor((tParam%3600)/60);
-      const ss = tParam%60;
-      hEl.value = hh; mEl.value = mm; sEl.value = ss;
-      setTimer(tParam);
-      statusEl.textContent = "Loaded from shared link. Press Start.";
-    } else {
-      setTimer(readInputs());
-    }
-
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
+  <script src="./app.js" defer></script>
 </body>
 </html>
