@@ -258,3 +258,91 @@ code{background: rgba(248,250,252,1); border:1px solid rgba(229,231,235,1); padd
   .ad-side{display:none}
   .time{font-size: 48px}
 }
+/* =========================
+   Presentation Mode
+   ========================= */
+
+body.present-mode{
+  background: #0b1220;
+  color: #f8fafc;
+}
+
+body.present-mode .topbar,
+body.present-mode .hero-left,
+body.present-mode .ad-slot,
+body.present-mode .section,
+body.present-mode .footer{
+  display:none !important;
+}
+
+/* Keep only timer area */
+body.present-mode .hero{
+  grid-template-columns: 1fr !important;
+  padding-top: 0 !important;
+}
+
+body.present-mode .hero-right{
+  width: 100%;
+}
+
+body.present-mode .timer-card{
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  padding: 18px;
+  margin: 0;
+}
+
+/* Hide input controls to reduce distraction */
+body.present-mode .timer-top,
+body.present-mode .secondary,
+body.present-mode .fineprint{
+  display:none !important;
+}
+
+/* Make timer massive */
+body.present-mode .display{
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin-top: 0;
+}
+
+body.present-mode .time{
+  font-size: clamp(64px, 16vw, 220px);
+  font-weight: 950;
+  letter-spacing: 2px;
+  text-shadow: 0 12px 50px rgba(0,0,0,.55);
+}
+
+body.present-mode .status{
+  font-size: clamp(14px, 2.5vw, 28px);
+  opacity: .85;
+}
+
+/* Keep action buttons centered */
+body.present-mode .actions{
+  justify-content: center;
+  margin-top: 18px;
+}
+
+/* Make buttons larger */
+body.present-mode .btn{
+  padding: 14px 16px;
+  border-radius: 16px;
+  font-size: 16px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.06);
+  color: #f8fafc;
+}
+
+body.present-mode .btn.primary{
+  background: linear-gradient(135deg, rgba(109,40,217,.95), rgba(6,182,212,.80));
+  border-color: rgba(255,255,255,.15);
+}
+
+/* Optional: keep fullscreen button readable */
+body.present-mode .btn:hover{
+  background: rgba(255,255,255,.10);
+}
+
