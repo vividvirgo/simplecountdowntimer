@@ -29,11 +29,22 @@ a:hover{opacity:1}
 .container{max-width:var(--max); margin:0 auto; padding: 18px 16px}
 
 .topbar{
-  position:sticky; top:0; z-index:50;
+  position: relative;
+  z-index: 50;
   background: rgba(246,248,255,.86);
   backdrop-filter: blur(10px);
   border-bottom:1px solid rgba(229,231,235,.9);
 }
+
+/* Make ONLY the nav row sticky */
+.topbar-inner{
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background: rgba(246,248,255,.86);
+  backdrop-filter: blur(10px);
+}
+
 .topbar-inner{display:flex; align-items:center; justify-content:space-between; gap:16px}
 
 .brand{display:flex; gap:12px; align-items:center}
@@ -456,8 +467,4 @@ body.static-page .ad-slot {
   line-height:1.7;
 }
 
-/* Prevent header/ad from overlapping content */
-main.container{
-  padding-top: 40px;
-}
 
