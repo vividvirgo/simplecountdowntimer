@@ -455,3 +455,9 @@ body.static-page .ad-slot {
 .content-card p{
   line-height:1.7;
 }
+
+/* Prevent header/ad from overlapping content */
+main.container{
+  padding-top: 24px;
+}
+
