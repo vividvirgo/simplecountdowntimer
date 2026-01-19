@@ -2,59 +2,72 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Contact — SimpleCountdownTimer</title>
-  <meta name="description" content="Contact SimpleCountdownTimer with feedback, questions, or feature requests." />
-  <link rel="stylesheet" href="./styles.css" />
+  <meta name="description" content="Contact SimpleCountdownTimer." />
+  <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
-  <div class="wrap">
-    <header>
-      <div class="brand">
+
+<body class="static-page">
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="index.html" aria-label="Home">
         <div class="logo">⏳</div>
         <div>
-          <div class="brand-title">SimpleCountdownTimer</div>
-          <div class="brand-sub">Fast • Free • No login</div>
+          <div class="title">SimpleCountdownTimer</div>
+          <div class="subtitle">Fast • Free • No login</div>
         </div>
-      </div>
+      </a>
 
-      <nav>
-        <a href="./index.html">Tool</a>
-        <a href="./about.html">About</a>
-        <a href="./contact.html" aria-current="page">Contact</a>
-        <a href="./privacy.html">Privacy</a>
-        <a href="./terms.html">Terms</a>
+      <nav class="nav" aria-label="Primary">
+        <a href="index.html#timer">Tool</a>
+        <a href="about.html">About</a>
+        <a href="contact.html" aria-current="page">Contact</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
       </nav>
-    </header>
+    </div>
+  </header>
 
-    <div class="ad top" aria-label="ad-slot">Ad Slot (Top Leaderboard)</div>
-
-    <section class="card">
+  <main class="container">
+    <section class="content-card">
       <h1>Contact</h1>
-      <p class="sub">Feedback and feature requests are welcome.</p>
+      <p class="muted">
+        Feedback, bug reports, or feature requests are welcome.
+      </p>
 
-      <div class="small">
-        <p>
-          The fastest way to reach us is email:
-          <strong><a href="mailto:hello@simplecountdowntimer.com">hello@simplecountdowntimer.com</a></strong>
-        </p>
+      <h2>Email</h2>
+      <p>
+        <a href="mailto:hello@simplecountdowntimer.com">hello@simplecountdowntimer.com</a>
+      </p>
 
-        <p>
-          Please include your device/browser if you’re reporting a bug (e.g., “iPhone Safari”).
-        </p>
-      </div>
+      <h2>What to include</h2>
+      <ul class="muted">
+        <li>What device/browser you’re using</li>
+        <li>What you expected to happen</li>
+        <li>What happened instead</li>
+      </ul>
     </section>
 
-    <footer>
-      <div>© <span id="year"></span> SimpleCountdownTimer</div>
-      <div class="small">Free online countdown timer</div>
+    <footer class="footer">
+      <div class="footer-grid">
+        <div>
+          <strong>SimpleCountdownTimer.com</strong>
+          <p class="muted">Fast timer utility. No accounts. No tracking.</p>
+        </div>
+        <div class="footer-links">
+          <a href="about.html">About</a>
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+      <p class="tiny muted">© <span id="year"></span> SimpleCountdownTimer</p>
     </footer>
-  </div>
+  </main>
 
   <script>
-    const y = document.getElementById("year");
-    if (y) y.textContent = new Date().getFullYear();
+    document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
-
