@@ -1,230 +1,318 @@
-// SimpleCountdownTimer — app.js (MVP)
+// Timer State
+let countdownInterval = null;
+let totalSeconds = 300; // Default 5 minutes
+let remainingSeconds = 300;
+let isRunning = false;
+let isPaused = false;
+let soundEnabled = true;
 
-const $ = (id) => document.getElementById(id);
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', () => {
+    updateDisplay();
+    checkForSharedTimer();
+});
 
-const timeOut = $("timeOut");
-const statusOut = $("statusOut");
-const minsIn = $("mins");
-const secsIn = $("secs");
-
-const btnSet = $("btnSet");
-const btnStart = $("btnStart");
-const btnPause = $("btnPause");
-const btnReset = $("btnReset");
-const btnShare = $("btnShare");
-const btnSound = $("btnSound");
-
-const toast = $("toast");
-const beep = $("beep");
-
-let totalSeconds = 300;      // default 5:00
-let remaining = totalSeconds;
-let intervalId = null;
-let running = false;
-let soundOn = true;
-
-function showToast(msg){
-  if(!toast) return;
-  toast.textContent = msg;
-  toast.classList.add("show");
-  setTimeout(()=>toast.classList.remove("show"), 1400);
-}
-
-function clamp(n, min, max){
-  return Math.min(max, Math.max(min, n));
-}
-
-function formatTime(sec){
-  sec = Math.max(0, Math.floor(sec));
-  const h = Math.floor(sec / 3600);
-  const m = Math.floor((sec % 3600) / 60);
-  const s = sec % 60;
-  const hh = h > 0 ? String(h).padStart(2,"0") + ":" : "";
-  return `${hh}${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
-}
-
-function render(){
-  timeOut.textContent = formatTime(remaining);
-  document.title = `${formatTime(remaining)} — SimpleCountdownTimer`;
-}
-
-function setButtons(){
-  btnPause.disabled = !running;
-  btnReset.disabled = (remaining === totalSeconds && !running);
-  btnStart.disabled = running || remaining <= 0;
-}
-
-function stopTimer(){
-  if(intervalId) clearInterval(intervalId);
-  intervalId = null;
-  running = false;
-  setButtons();
-}
-
-function tick(){
-  if(remaining <= 0){
-    remaining = 0;
-    render();
-    stopTimer();
-    statusOut.textContent = "Time’s up!";
-    if(soundOn){
-      // beep with a safe fallback
-      try { beep.currentTime = 0; beep.play(); } catch(e) {}
+// Set timer from preset buttons
+function setTimer(minutes, seconds) {
+    if (isRunning && !isPaused) {
+        if (!confirm('Timer is running. Do you want to reset it?')) {
+            return;
+        }
     }
-    return;
-  }
-  remaining -= 1;
-  render();
-}
-
-function startTimer(){
-  if(running || remaining <= 0) return;
-  running = true;
-  statusOut.textContent = "Running…";
-  setButtons();
-  intervalId = setInterval(tick, 1000);
-}
-
-function pauseTimer(){
-  if(!running) return;
-  stopTimer();
-  statusOut.textContent = "Paused.";
-}
-
-function resetTimer(){
-  stopTimer();
-  remaining = totalSeconds;
-  render();
-  statusOut.textContent = "Ready.";
-  setButtons();
-}
-
-function setFromInputs(){
-  const mRaw = parseInt(minsIn.value || "0", 10);
-  const sRaw = parseInt(secsIn.value || "0", 10);
-
-  const m = isNaN(mRaw) ? 0 : clamp(mRaw, 0, 999);
-  const s = isNaN(sRaw) ? 0 : clamp(sRaw, 0, 59);
-
-  const newTotal = (m * 60) + s;
-  if(newTotal <= 0){
-    showToast("Enter a time above 0");
-    return;
-  }
-
-  stopTimer();
-  totalSeconds = newTotal;
-  remaining = totalSeconds;
-  render();
-  statusOut.textContent = "Ready.";
-  setButtons();
-
-  // update URL for shareability
-  setQueryFromSeconds(totalSeconds);
-}
-
-function setPreset(seconds){
-  seconds = clamp(seconds, 1, 60 * 60 * 24); // up to 24h for sanity
-  stopTimer();
-  totalSeconds = seconds;
-  remaining = totalSeconds;
-  render();
-  statusOut.textContent = "Ready.";
-  setButtons();
-  setQueryFromSeconds(totalSeconds);
-}
-
-function setQueryFromSeconds(seconds){
-  const url = new URL(window.location.href);
-  url.searchParams.set("t", String(seconds));
-  window.history.replaceState({}, "", url.toString());
-}
-
-async function copyLink(){
-  const url = new URL(window.location.href);
-  url.searchParams.set("t", String(totalSeconds));
-  try{
-    await navigator.clipboard.writeText(url.toString());
-    showToast("Link copied");
-  } catch(e){
-    // fallback
-    const ta = document.createElement("textarea");
-    ta.value = url.toString();
-    ta.style.position = "fixed";
-    ta.style.left = "-9999px";
-    document.body.appendChild(ta);
-    ta.focus(); ta.select();
-    try { document.execCommand("copy"); showToast("Link copied"); }
-    catch(err){ showToast("Copy failed"); }
-    document.body.removeChild(ta);
-  }
-}
-
-function toggleSound(){
-  soundOn = !soundOn;
-  btnSound.textContent = soundOn ? "Sound: On" : "Sound: Off";
-  showToast(soundOn ? "Sound enabled" : "Sound muted");
-}
-
-// Wire up preset chips
-document.querySelectorAll("[data-preset]").forEach(btn=>{
-  btn.addEventListener("click", ()=>{
-    const sec = parseInt(btn.getAttribute("data-preset"), 10);
-    if(!isNaN(sec)) setPreset(sec);
-  });
-});
-
-// Buttons
-btnSet.addEventListener("click", setFromInputs);
-btnStart.addEventListener("click", startTimer);
-btnPause.addEventListener("click", pauseTimer);
-btnReset.addEventListener("click", resetTimer);
-btnShare.addEventListener("click", copyLink);
-btnSound.addEventListener("click", toggleSound);
-
-// Enter key in inputs triggers Set
-[minsIn, secsIn].forEach(inp=>{
-  inp.addEventListener("keydown", (e)=>{
-    if(e.key === "Enter") setFromInputs();
-  });
-});
-
-// Load from URL (?t=300)
-(function init(){
-  const url = new URL(window.location.href);
-  const t = parseInt(url.searchParams.get("t") || "", 10);
-  if(!isNaN(t) && t > 0){
-    totalSeconds = clamp(t, 1, 60 * 60 * 24);
-    remaining = totalSeconds;
-  } else {
-    // default 5 minutes
-    totalSeconds = 300;
-    remaining = totalSeconds;
-    setQueryFromSeconds(totalSeconds);
-  }
-
-  $("year").textContent = new Date().getFullYear();
-  render();
-  statusOut.textContent = "Ready.";
-  setButtons();
-})();
-document.addEventListener("keydown", (e) => {
-  const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : "";
-  const isTyping =
-    tag === "input" || tag === "textarea" || tag === "select" || e.target.isContentEditable;
-
-  if (isTyping) return; // don't hijack keys while user types
-
-  // Space toggles start/pause
-  if (e.code === "Space") {
-    e.preventDefault(); // prevents page scrolling
-    toggleStartPause(); // you will implement or connect this function below
-  }
-
-  // R resets
-  if (e.key.toLowerCase() === "r") {
-    e.preventDefault();
+    
     resetTimer();
-  }
+    totalSeconds = (minutes * 60) + seconds;
+    remainingSeconds = totalSeconds;
+    
+    // Update input fields
+    document.getElementById('minutesInput').value = minutes;
+    document.getElementById('secondsInput').value = seconds;
+    
+    updateDisplay();
+    updateStatus('Ready.');
+}
+
+// Set custom timer from input fields
+function setCustomTimer() {
+    if (isRunning && !isPaused) {
+        if (!confirm('Timer is running. Do you want to reset it?')) {
+            return;
+        }
+    }
+    
+    const minutes = parseInt(document.getElementById('minutesInput').value) || 0;
+    const seconds = parseInt(document.getElementById('secondsInput').value) || 0;
+    
+    if (minutes === 0 && seconds === 0) {
+        alert('Please enter a time greater than 0.');
+        return;
+    }
+    
+    resetTimer();
+    totalSeconds = (minutes * 60) + seconds;
+    remainingSeconds = totalSeconds;
+    
+    updateDisplay();
+    updateStatus('Ready.');
+}
+
+// Validate input fields
+function validateInput(input) {
+    let value = parseInt(input.value) || 0;
+    
+    if (input.id === 'minutesInput') {
+        if (value < 0) value = 0;
+        if (value > 999) value = 999;
+    } else if (input.id === 'secondsInput') {
+        if (value < 0) value = 0;
+        if (value > 59) value = 59;
+    }
+    
+    input.value = value;
+}
+
+// Start timer
+function startTimer() {
+    if (isRunning) return;
+    
+    if (remainingSeconds <= 0) {
+        alert('Please set a time first.');
+        return;
+    }
+    
+    isRunning = true;
+    isPaused = false;
+    
+    document.getElementById('startBtn').disabled = true;
+    document.getElementById('pauseBtn').disabled = false;
+    document.getElementById('timerDisplay').classList.add('running');
+    
+    updateStatus('Running...');
+    
+    countdownInterval = setInterval(() => {
+        remainingSeconds--;
+        updateDisplay();
+        
+        if (remainingSeconds <= 0) {
+            timerComplete();
+        }
+    }, 1000);
+}
+
+// Pause timer
+function pauseTimer() {
+    if (!isRunning) return;
+    
+    isPaused = true;
+    isRunning = false;
+    clearInterval(countdownInterval);
+    
+    document.getElementById('startBtn').disabled = false;
+    document.getElementById('pauseBtn').disabled = true;
+    document.getElementById('timerDisplay').classList.remove('running');
+    
+    updateStatus('Paused.');
+}
+
+// Reset timer
+function resetTimer() {
+    clearInterval(countdownInterval);
+    isRunning = false;
+    isPaused = false;
+    remainingSeconds = totalSeconds;
+    
+    document.getElementById('startBtn').disabled = false;
+    document.getElementById('pauseBtn').disabled = true;
+    document.getElementById('timerDisplay').classList.remove('running');
+    
+    updateDisplay();
+    updateStatus('Ready.');
+}
+
+// Timer complete
+function timerComplete() {
+    clearInterval(countdownInterval);
+    isRunning = false;
+    remainingSeconds = 0;
+    
+    document.getElementById('startBtn').disabled = false;
+    document.getElementById('pauseBtn').disabled = true;
+    document.getElementById('timerDisplay').classList.remove('running');
+    
+    updateDisplay();
+    updateStatus('Time\'s up! 🎉');
+    
+    // Play sound
+    if (soundEnabled) {
+        playAlarmSound();
+    }
+    
+    // Show notification if supported
+    if ('Notification' in window && Notification.permission === 'granted') {
+        new Notification('Timer Complete!', {
+            body: 'Your countdown has finished.',
+            icon: '⏱️'
+        });
+    }
+}
+
+// Update display
+function updateDisplay() {
+    const minutes = Math.floor(remainingSeconds / 60);
+    const seconds = remainingSeconds % 60;
+    
+    document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+    document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+}
+
+// Update status message
+function updateStatus(message) {
+    document.getElementById('timerStatus').textContent = message;
+}
+
+// Toggle sound
+function toggleSound() {
+    soundEnabled = !soundEnabled;
+    
+    const btn = document.getElementById('soundBtn');
+    const icon = document.getElementById('soundIcon');
+    const status = document.getElementById('soundStatus');
+    
+    if (soundEnabled) {
+        btn.classList.remove('muted');
+        icon.textContent = '🔊';
+        status.textContent = 'On';
+    } else {
+        btn.classList.add('muted');
+        icon.textContent = '🔇';
+        status.textContent = 'Off';
+    }
+}
+
+// Play alarm sound using Web Audio API
+function playAlarmSound() {
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    
+    // Create a simple beep pattern
+    const beepCount = 3;
+    const beepDuration = 0.2;
+    const beepGap = 0.3;
+    
+    for (let i = 0; i < beepCount; i++) {
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        oscillator.frequency.value = 800;
+        oscillator.type = 'sine';
+        
+        const startTime = audioContext.currentTime + (i * (beepDuration + beepGap));
+        const endTime = startTime + beepDuration;
+        
+        gainNode.gain.setValueAtTime(0.3, startTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, endTime);
+        
+        oscillator.start(startTime);
+        oscillator.stop(endTime);
+    }
+}
+
+// Request notification permission on first interaction
+document.addEventListener('click', () => {
+    if ('Notification' in window && Notification.permission === 'default') {
+        Notification.requestPermission();
+    }
+}, { once: true });
+
+// Generate shareable link
+function generateLink() {
+    const minutes = parseInt(document.getElementById('minutesInput').value) || 0;
+    const seconds = parseInt(document.getElementById('secondsInput').value) || 0;
+    const totalSecs = (minutes * 60) + seconds;
+    
+    if (totalSecs === 0) {
+        alert('Please set a time first.');
+        return;
+    }
+    
+    const url = `${window.location.origin}${window.location.pathname}?t=${totalSecs}`;
+    
+    // Copy to clipboard
+    navigator.clipboard.writeText(url).then(() => {
+        alert('Link copied to clipboard! Share it with anyone.');
+    }).catch(() => {
+        prompt('Copy this link:', url);
+    });
+}
+
+// Check URL for shared timer
+function checkForSharedTimer() {
+    const params = new URLSearchParams(window.location.search);
+    const time = params.get('t');
+    
+    if (time) {
+        const totalSecs = parseInt(time);
+        if (totalSecs > 0 && totalSecs < 86400) { // Max 24 hours
+            const mins = Math.floor(totalSecs / 60);
+            const secs = totalSecs % 60;
+            setTimer(mins, secs);
+            
+            // Show cancel link button
+            document.getElementById('cancelBtn').style.display = 'block';
+        }
+    }
+}
+
+// Cancel shared link
+function cancelLink() {
+    window.history.replaceState({}, document.title, window.location.pathname);
+    document.getElementById('cancelBtn').style.display = 'none';
+}
+
+// Keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+    // Space bar to start/pause
+    if (e.code === 'Space' && e.target.tagName !== 'INPUT') {
+        e.preventDefault();
+        if (isRunning) {
+            pauseTimer();
+        } else {
+            startTimer();
+        }
+    }
+    
+    // R key to reset
+    if (e.code === 'KeyR' && e.target.tagName !== 'INPUT') {
+        e.preventDefault();
+        resetTimer();
+    }
+    
+    // S key to toggle sound
+    if (e.code === 'KeyS' && e.target.tagName !== 'INPUT') {
+        e.preventDefault();
+        toggleSound();
+    }
 });
 
+// Handle visibility change (pause when tab is hidden to prevent drift)
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden && isRunning) {
+        // Store the exact time when tab was hidden
+        window.timerHiddenTime = Date.now();
+        window.timerRemainingAtHide = remainingSeconds;
+    } else if (!document.hidden && window.timerHiddenTime && isRunning) {
+        // Calculate elapsed time while hidden
+        const elapsedSeconds = Math.floor((Date.now() - window.timerHiddenTime) / 1000);
+        remainingSeconds = window.timerRemainingAtHide - elapsedSeconds;
+        
+        if (remainingSeconds <= 0) {
+            timerComplete();
+        } else {
+            updateDisplay();
+        }
+        
+        window.timerHiddenTime = null;
+    }
+});
