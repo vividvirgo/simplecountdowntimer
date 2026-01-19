@@ -1,91 +1,198 @@
-<!-- index.html -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Countdown Timer - Fast, Free, No Login</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Assuming you have a favicon -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Simple Countdown Timer — Free Online Timer</title>
+  <meta name="description" content="A clean, fast online countdown timer. Start, pause, reset, fullscreen, and share a preset link. Runs entirely in your browser." />
+  <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
-    <header>
-        <div class="logo">
-            <img src="logo.png" alt="Simple Countdown Timer Logo"> <!-- Replace with your logo path -->
-            <span>Simple Countdown Timer</span>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="index.html" aria-label="Simple Countdown Timer Home">
+        <div class="logo">⏳</div>
+        <div>
+          <div class="title">SimpleCountdownTimer</div>
+          <div class="subtitle">A clean online countdown timer — no login, no clutter.</div>
         </div>
-        <nav>
-            <ul>
-                <li><a href="tool.html">Tool</a></li> <!-- If there's a separate tool page, otherwise remove -->
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="privacy.html">Privacy</a></li>
-                <li><a href="terms.html">Terms</a></li>
-            </ul>
-        </nav>
-    </header>
+      </a>
 
-    <main>
-        <section class="hero">
-            <h1>Start a Countdown in Seconds</h1>
-            <p>Pick a preset or set a custom time. Pause, resume, reset — clean and distraction-free.</p>
-        </section>
+      <nav class="nav" aria-label="Primary">
+        <a href="#timer">Timer</a>
+        <a href="#features">Features</a>
+        <a href="#faq">FAQ</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
 
-        <section class="timer-section">
-            <div class="presets">
-                <button class="preset-btn" data-minutes="1">1 min</button>
-                <button class="preset-btn" data-minutes="5">5 min</button>
-                <button class="preset-btn" data-minutes="10">10 min</button>
-                <button class="preset-btn" data-minutes="25">25 min</button>
-                <button class="preset-btn" data-minutes="60">60 min</button>
+    <!-- Header Ad Slot (placeholder) -->
+    <div class="container">
+      <div class="ad-slot ad-header" aria-label="Advertisement">
+        <div class="ad-label">Advertisement</div>
+        <div class="ad-box">Responsive Ad Slot (Header)</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- HERO -->
+    <section class="hero" id="timer">
+      <div class="hero-left">
+        <h1>Set a timer. Stay on track.</h1>
+        <p class="lead">
+          A simple countdown timer you can trust for meetings, workouts, studying, cooking, and focus sessions.
+          <span class="trust">Runs entirely in your browser. No login. No tracking.</span>
+        </p>
+
+        <div class="chips">
+          <span class="chip">Space = Start/Pause</span>
+          <span class="chip">R = Reset</span>
+          <span class="chip">F = Fullscreen</span>
+        </div>
+
+        <!-- Optional desktop side ad -->
+        <div class="ad-slot ad-side" aria-label="Advertisement">
+          <div class="ad-label">Advertisement</div>
+          <div class="ad-box">Desktop Ad Slot (Sidebar)</div>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="card timer-card">
+          <div class="timer-top">
+            <div class="preset-row" aria-label="Quick presets">
+              <button class="preset" data-min="1">1m</button>
+              <button class="preset" data-min="5">5m</button>
+              <button class="preset" data-min="10">10m</button>
+              <button class="preset" data-min="15">15m</button>
+              <button class="preset" data-min="25">25m</button>
+              <button class="preset" data-min="45">45m</button>
+              <button class="preset" data-min="60">60m</button>
             </div>
 
-            <div class="sound-toggle">
-                <label for="sound">Sound:</label>
-                <select id="sound">
-                    <option value="on">On</option>
-                    <option value="off">Off</option>
+            <div class="inputs">
+              <div class="field">
+                <label for="mins">Minutes</label>
+                <input id="mins" type="number" min="0" max="999" inputmode="numeric" value="10" />
+              </div>
+              <div class="field">
+                <label for="secs">Seconds</label>
+                <input id="secs" type="number" min="0" max="59" inputmode="numeric" value="0" />
+              </div>
+
+              <div class="field">
+                <label for="alarm">Alarm</label>
+                <select id="alarm" aria-label="Alarm sound">
+                  <option value="chime" selected>Chime</option>
+                  <option value="beep">Beep</option>
+                  <option value="none">None</option>
                 </select>
+              </div>
             </div>
+          </div>
 
-            <div class="timer-display" id="timer">00:00</div>
+          <!-- In-tool ad slot -->
+          <div class="ad-slot ad-in-tool" aria-label="Advertisement">
+            <div class="ad-label">Advertisement</div>
+            <div class="ad-box">Responsive Ad Slot (In Tool)</div>
+          </div>
 
-            <div class="ad-slot">Ad Slot (Inline 300x250)</div> <!-- Placeholder for ad -->
+          <div class="display" aria-live="polite" aria-label="Timer display">
+            <div class="time" id="timeDisplay">10:00</div>
+            <div class="status" id="statusText">Ready</div>
+          </div>
 
-            <p class="info">Runs entirely in your browser. Ready. No login. No tracking.</p>
+          <div class="actions">
+            <button id="startBtn" class="btn primary" type="button">Start</button>
+            <button id="pauseBtn" class="btn" type="button" disabled>Pause</button>
+            <button id="resetBtn" class="btn ghost" type="button">Reset</button>
+            <button id="fullscreenBtn" class="btn" type="button">Fullscreen</button>
+          </div>
 
-            <div class="custom-input">
-                <label for="minutes">Minutes:</label>
-                <input type="number" id="minutes" min="0" value="5">
-                <label for="seconds">Seconds:</label>
-                <input type="number" id="seconds" min="0" max="59" value="0">
-                <button id="set-btn">Set</button>
-            </div>
+          <div class="secondary">
+            <button id="copyLinkBtn" class="btn small" type="button">Copy preset link</button>
+            <button id="toggleSoundBtn" class="btn small" type="button" aria-pressed="true">Sound: On</button>
+          </div>
 
-            <div class="controls">
-                <button id="start-btn">Start</button>
-                <button id="pause-btn" disabled>Pause</button>
-                <button id="resume-btn" disabled>Resume</button>
-                <button id="reset-btn" disabled>Reset</button>
-            </div>
-        </section>
+          <p class="fineprint">
+            Tip: You can share a preset link like <code>?t=15:00</code> or <code>?m=25</code>.
+          </p>
 
-        <section class="popular-uses">
-            <h2>Popular Uses</h2>
-            <ul>
-                <li>Productivity timers (e.g., Pomodoro)</li>
-                <li>Cooking and baking</li>
-                <li>Workouts and exercises</li>
-                <li>Meditation sessions</li>
-                <li>Presentations and speeches</li>
-            </ul>
-        </section>
-    </main>
+          <p id="toast" class="toast" role="status" aria-live="polite">Copied!</p>
+        </div>
+      </div>
+    </section>
 
-    <footer>
-        <p>&copy; 2026 Simple Countdown Timer. All rights reserved.</p>
+    <!-- MID AD -->
+    <div class="ad-slot ad-mid" aria-label="Advertisement">
+      <div class="ad-label">Advertisement</div>
+      <div class="ad-box">Responsive Ad Slot (Mid Page)</div>
+    </div>
+
+    <!-- FEATURES -->
+    <section class="section" id="features">
+      <h2>Features</h2>
+      <div class="grid">
+        <div class="mini-card">
+          <h3>Fullscreen mode</h3>
+          <p>Perfect for presenting, workouts, and classrooms.</p>
+        </div>
+        <div class="mini-card">
+          <h3>Shareable presets</h3>
+          <p>Copy a link that loads your timer instantly.</p>
+        </div>
+        <div class="mini-card">
+          <h3>Keyboard shortcuts</h3>
+          <p>Space to start/pause, R to reset, F for fullscreen.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <h2>FAQ</h2>
+      <div class="faq">
+        <details>
+          <summary>Does this timer run on my device?</summary>
+          <p>Yes. The timer runs entirely in your browser. Your settings aren’t uploaded anywhere.</p>
+        </details>
+        <details>
+          <summary>Will the timer keep running if my phone locks?</summary>
+          <p>Some mobile browsers pause timers in the background. For best results, keep the page open and your device awake during critical timing.</p>
+        </details>
+        <details>
+          <summary>Can I use it for Pomodoro?</summary>
+          <p>Yes — try the 25m preset. You can also share preset links for Pomodoro rounds.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- Footer ad (optional) -->
+    <div class="ad-slot ad-footer" aria-label="Advertisement">
+      <div class="ad-label">Advertisement</div>
+      <div class="ad-box">Responsive Ad Slot (Footer)</div>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-grid">
+        <div>
+          <strong>SimpleCountdownTimer.com</strong>
+          <p class="muted">Fast timer utility. No accounts. No tracking.</p>
+        </div>
+        <div class="footer-links">
+          <a href="about.html">About</a>
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+      <p class="tiny muted">© <span id="year"></span> SimpleCountdownTimer</p>
     </footer>
+  </main>
 
-    <script src="app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
