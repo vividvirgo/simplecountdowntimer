@@ -359,3 +359,13 @@ body.present-mode .btn:hover{
 .content-card h2{margin-top:18px}
 .content-card p{line-height:1.7}
 
+/* Tighten spacing on static pages */
+.content-card{
+  margin-top: 10px; /* was 18px */
+}
+/* Reduce extra whitespace under header on static pages */
+.topbar + .container,
+header.topbar + main.container{
+  padding-top: 8px;
+}
+
