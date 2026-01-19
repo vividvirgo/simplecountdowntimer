@@ -61,7 +61,7 @@
       </div>
 
       <div class="hero-right">
-        <div class="card timer-card">
+        <div class="card timer-card" id="timerCard">
           <div class="timer-top">
             <div class="preset-row" aria-label="Quick presets">
               <button class="preset" data-min="1">1m</button>
@@ -105,12 +105,14 @@
             <div class="status" id="statusText">Ready</div>
           </div>
 
-          <div class="actions">
-            <button id="startBtn" class="btn primary" type="button">Start</button>
-            <button id="pauseBtn" class="btn" type="button" disabled>Pause</button>
-            <button id="resetBtn" class="btn ghost" type="button">Reset</button>
-            <button id="fullscreenBtn" class="btn" type="button">Fullscreen</button>
-          </div>
+<div class="actions">
+  <button id="startBtn" class="btn primary" type="button">Start</button>
+  <button id="pauseBtn" class="btn" type="button" disabled>Pause</button>
+  <button id="resetBtn" class="btn ghost" type="button">Reset</button>
+  <button id="fullscreenBtn" class="btn" type="button">Fullscreen</button>
+  <button id="presentBtn" class="btn" type="button">Presentation Mode</button>
+</div>
+
 
           <div class="secondary">
             <button id="copyLinkBtn" class="btn small" type="button">Copy preset link</button>
