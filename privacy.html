@@ -2,80 +2,96 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Privacy Policy — SimpleCountdownTimer</title>
   <meta name="description" content="Privacy policy for SimpleCountdownTimer." />
-  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
-  <div class="wrap">
-    <header>
-      <div class="brand">
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="index.html" aria-label="Home">
         <div class="logo">⏳</div>
         <div>
-          <div class="brand-title">SimpleCountdownTimer</div>
-          <div class="brand-sub">Fast • Free • No login</div>
+          <div class="title">SimpleCountdownTimer</div>
+          <div class="subtitle">Fast • Free • No login</div>
         </div>
-      </div>
+      </a>
 
-      <nav>
-        <a href="./index.html">Tool</a>
-        <a href="./about.html">About</a>
-        <a href="./contact.html">Contact</a>
-        <a href="./privacy.html" aria-current="page">Privacy</a>
-        <a href="./terms.html">Terms</a>
+      <nav class="nav" aria-label="Primary">
+        <a href="index.html#timer">Tool</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html" aria-current="page">Privacy</a>
+        <a href="terms.html">Terms</a>
       </nav>
-    </header>
+    </div>
 
-    <div class="ad top" aria-label="ad-slot">Ad Slot (Top Leaderboard)</div>
-
-    <section class="card">
-      <h1>Privacy Policy</h1>
-      <p class="sub">Last updated: <span id="lastUpdated"></span></p>
-
-      <div class="small">
-        <p><strong>Summary:</strong> This timer runs in your browser. We do not ask you to create an account.</p>
-
-        <h3 style="margin-top:14px">Information we collect</h3>
-        <p>
-          We do not collect personal information such as your name, address, or payment details.
-        </p>
-
-        <h3 style="margin-top:14px">Cookies and advertising</h3>
-        <p>
-          If we display ads (for example, via Google AdSense), third-party vendors may use cookies or similar
-          technologies to serve ads based on prior visits to this or other websites.
-        </p>
-        <p>
-          You can learn more about Google advertising and opt-out options in Google’s ad settings.
-        </p>
-
-        <h3 style="margin-top:14px">Analytics</h3>
-        <p>
-          We may use privacy-friendly analytics to understand overall traffic (for example, pages viewed and
-          general location such as country). This helps us improve the site. We do not sell personal data.
-        </p>
-
-        <h3 style="margin-top:14px">Contact</h3>
-        <p>
-          If you have questions about this policy, contact:
-          <a href="mailto:hello@simplecountdowntimer.com">hello@simplecountdowntimer.com</a>
-        </p>
+    <!-- Optional header ad placeholder -->
+    <div class="container">
+      <div class="ad-slot ad-header" aria-label="Advertisement">
+        <div class="ad-label">Advertisement</div>
+        <div class="ad-box">Responsive Ad Slot (Header)</div>
       </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="content-card">
+      <h1>Privacy Policy</h1>
+      <p class="muted">Last updated: <span id="lastUpdated"></span></p>
+
+      <p><strong>Summary:</strong> This timer runs in your browser. We do not require accounts.</p>
+
+      <h2>Information we collect</h2>
+      <p>
+        We do not collect personal information such as your name, address, or payment details.
+      </p>
+
+      <h2>Cookies and advertising</h2>
+      <p>
+        If we display ads (for example, via Google AdSense), third-party vendors may use cookies or similar
+        technologies to serve ads based on prior visits to this or other websites.
+      </p>
+      <p>
+        You can learn more about Google advertising and opt-out options in Google’s ad settings.
+      </p>
+
+      <h2>Analytics</h2>
+      <p>
+        We may use privacy-friendly analytics to understand overall traffic (for example, pages viewed and
+        general location such as country). This helps improve the site. We do not sell personal data.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        Questions? Email:
+        <a href="mailto:hello@simplecountdowntimer.com">hello@simplecountdowntimer.com</a>
+      </p>
     </section>
 
-    <footer>
-      <div>© <span id="year"></span> SimpleCountdownTimer</div>
-      <div class="small">Free online countdown timer</div>
+    <footer class="footer">
+      <div class="footer-grid">
+        <div>
+          <strong>SimpleCountdownTimer.com</strong>
+          <p class="muted">Fast timer utility. No accounts. No tracking.</p>
+        </div>
+        <div class="footer-links">
+          <a href="about.html">About</a>
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+      <p class="tiny muted">© <span id="year"></span> SimpleCountdownTimer</p>
     </footer>
-  </div>
+  </main>
 
   <script>
-    const y = document.getElementById("year");
-    if (y) y.textContent = new Date().getFullYear();
-    const lu = document.getElementById("lastUpdated");
-    if (lu) lu.textContent = new Date().toLocaleDateString(undefined, { year:"numeric", month:"long", day:"numeric" });
+    document.getElementById("year").textContent = new Date().getFullYear();
+    document.getElementById("lastUpdated").textContent =
+      new Date().toLocaleDateString(undefined, { year:"numeric", month:"long", day:"numeric" });
   </script>
 </body>
 </html>
-
