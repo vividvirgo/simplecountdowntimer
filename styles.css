@@ -345,4 +345,17 @@ body.present-mode .btn.primary{
 body.present-mode .btn:hover{
   background: rgba(255,255,255,.10);
 }
+/* Static pages (privacy/terms/about/contact) */
+.content-card{
+  background: rgba(255,255,255,.92);
+  border:1px solid rgba(229,231,235,1);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px;
+  margin-top: 18px;
+}
+
+.content-card h1{margin-top:0}
+.content-card h2{margin-top:18px}
+.content-card p{line-height:1.7}
 
