@@ -1,126 +1,186 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-
-  <title>SimpleCountdownTimer — Free Online Countdown Timer</title>
-  <meta name="description" content="Start a simple online countdown timer in seconds. Presets, custom time, pause/resume, and one-click reset." />
-
-  <link rel="stylesheet" href="./styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Countdown Timer - Fast, Free, No Login</title>
+    <meta name="description" content="Start a countdown in seconds. Pick a preset or set custom time. Pause, resume, reset — clean and distraction-free.">
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-  <div class="wrap">
-    <header>
-      <div class="brand">
-        <div class="logo">⏳</div>
-        <div>
-          <div class="brand-title">SimpleCountdownTimer</div>
-          <div class="brand-sub">Fast • Free • No login</div>
-        </div>
-      </div>
-
-      <nav>
-        <a href="./index.html" aria-current="page">Tool</a>
-        <a href="./about.html">About</a>
-        <a href="./contact.html">Contact</a>
-        <a href="./privacy.html">Privacy</a>
-        <a href="./terms.html">Terms</a>
-      </nav>
-    </header>
-
-    <!-- Top ad slot -->
-    <div class="ad top" aria-label="ad-slot">Ad Slot (Top Leaderboard)</div>
-
-    <h1>Start a countdown in seconds.</h1>
-    <p class="sub">Pick a preset or set a custom time. Pause, resume, reset — clean and distraction-free.</p>
-
-    <div class="grid">
-      <!-- LEFT: Timer -->
-      <section class="card">
-        <div class="row toolbar">
-          <div class="row">
-            <button class="chip" data-preset="60">1 min</button>
-            <button class="chip" data-preset="300">5 min</button>
-            <button class="chip" data-preset="600">10 min</button>
-            <button class="chip" data-preset="1500">25 min</button>
-            <button class="chip" data-preset="3600">60 min</button>
-          </div>
-
-          <div class="row">
-            <button class="btn2" id="btnSound" type="button" title="Toggle alarm sound">Sound: On</button>
-          </div>
-        </div>
-
-        <div class="timer" role="status" aria-live="polite">
-          <div class="time" id="timeOut">00:05:00</div>
-          <div class="hint" id="statusOut">Ready.</div>
-          <p class="trustline" id="trustline">
-  Runs entirely in your browser. No login. No tracking.
-</p>
-
-        </div>
-
-        <div class="controls">
-          <div class="row">
-            <div class="field">
-              <label for="mins">Minutes</label>
-              <input id="mins" inputmode="numeric" type="number" min="0" placeholder="5" />
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">⏱️</span>
+                <div class="logo-text">
+                    <div class="logo-name">SimpleCountdownTimer</div>
+                    <div class="logo-tagline">Fast • Free • No login</div>
+                </div>
             </div>
-            <div class="field">
-              <label for="secs">Seconds</label>
-              <input id="secs" inputmode="numeric" type="number" min="0" max="59" placeholder="0" />
+            <div class="nav-links">
+                <a href="#tool">Tool</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+                <a href="privacy.html">Privacy</a>
+                <a href="terms.html">Terms</a>
             </div>
-            <button class="btn" id="btnSet" type="button">Set</button>
-          </div>
-
-          <div class="row actions">
-            <button class="btn" id="btnStart" type="button">Start</button>
-            <button class="btn2" id="btnPause" type="button" disabled>Pause</button>
-            <button class="btn2" id="btnReset" type="button" disabled>Reset</button>
-            <button class="btn2" id="btnShare" type="button">Copy Link</button>
-          </div>
-
-          <p class="small">
-            Tip: share a preset timer link with friends (e.g., 5-minute timer). Works on mobile.
-          </p>
         </div>
-      </section>
+    </nav>
 
-      <!-- RIGHT: Sidebar -->
-      <aside class="card">
-        <div class="ad inline">Ad Slot (Inline 300×250)</div>
-
-        <h3>Popular uses</h3>
-        <ul class="muted-list">
-          <li>Cooking & baking</li>
-          <li>Study sessions</li>
-          <li>Work sprints</li>
-          <li>Fitness intervals</li>
-          <li>Classroom activities</li>
-        </ul>
-
-        <div class="small" style="margin-top:14px">
-          Want to add a “Full screen” mode later? Easy. This MVP is intentionally simple.
+    <!-- Ad Slot Top -->
+    <div class="ad-container ad-top">
+        <p class="ad-label">Advertisement</p>
+        <div class="ad-placeholder">
+            <p>Ad Slot (Top Leaderboard)</p>
         </div>
-      </aside>
     </div>
 
-    <div class="ad footer">Ad Slot (Footer)</div>
+    <div class="container">
+        <!-- Hero Section -->
+        <header class="hero">
+            <h1>Start a countdown in seconds.</h1>
+            <p class="hero-subtitle">Pick a preset or set a custom time. Pause, resume, reset — clean and distraction-free.</p>
+        </header>
 
+        <div class="main-layout">
+            <!-- Main Timer Section -->
+            <div class="timer-section" id="tool">
+                <div class="timer-card">
+                    <!-- Quick Presets -->
+                    <div class="presets">
+                        <button class="preset-btn" onclick="setTimer(1, 0)">1 min</button>
+                        <button class="preset-btn" onclick="setTimer(5, 0)">5 min</button>
+                        <button class="preset-btn" onclick="setTimer(10, 0)">10 min</button>
+                        <button class="preset-btn" onclick="setTimer(25, 0)">25 min</button>
+                        <button class="preset-btn" onclick="setTimer(60, 0)">60 min</button>
+                        <button class="sound-toggle" onclick="toggleSound()" id="soundBtn">
+                            <span id="soundIcon">🔊</span> Sound: <span id="soundStatus">On</span>
+                        </button>
+                    </div>
+
+                    <!-- Timer Display -->
+                    <div class="timer-display" id="timerDisplay">
+                        <div class="time-digits">
+                            <span id="minutes">05</span>:<span id="seconds">00</span>
+                        </div>
+                        <div class="timer-status" id="timerStatus">Ready.</div>
+                        <p class="timer-note">Runs entirely in your browser. No login. No tracking.</p>
+                    </div>
+
+                    <!-- Custom Time Inputs -->
+                    <div class="custom-inputs">
+                        <div class="input-group">
+                            <label for="minutesInput">Minutes</label>
+                            <input type="number" id="minutesInput" min="0" max="999" value="5" oninput="validateInput(this)">
+                        </div>
+                        <div class="input-group">
+                            <label for="secondsInput">Seconds</label>
+                            <input type="number" id="secondsInput" min="0" max="59" value="0" oninput="validateInput(this)">
+                        </div>
+                        <button class="btn-set" onclick="setCustomTimer()">Set</button>
+                    </div>
+
+                    <!-- Control Buttons -->
+                    <div class="controls">
+                        <button class="btn-control btn-start" onclick="startTimer()" id="startBtn">Start</button>
+                        <button class="btn-control btn-pause" onclick="pauseTimer()" id="pauseBtn" disabled>Pause</button>
+                        <button class="btn-control btn-reset" onclick="resetTimer()" id="resetBtn">Reset</button>
+                        <button class="btn-control btn-cancel" onclick="cancelLink()" id="cancelBtn" style="display: none;">Cancel Link</button>
+                    </div>
+                </div>
+
+                <!-- Popular Uses Section -->
+                <div class="popular-uses">
+                    <h2>Popular uses</h2>
+                    <div class="uses-grid">
+                        <div class="use-card">
+                            <span class="use-icon">🍅</span>
+                            <h3>Pomodoro sessions</h3>
+                            <p>25-minute focused work intervals</p>
+                        </div>
+                        <div class="use-card">
+                            <span class="use-icon">🏃</span>
+                            <h3>Workout intervals</h3>
+                            <p>HIIT training and rest periods</p>
+                        </div>
+                        <div class="use-card">
+                            <span class="use-icon">🍳</span>
+                            <h3>Cooking timer</h3>
+                            <p>Perfect timing for recipes</p>
+                        </div>
+                        <div class="use-card">
+                            <span class="use-icon">📚</span>
+                            <h3>Study breaks</h3>
+                            <p>Scheduled rest between sessions</p>
+                        </div>
+                        <div class="use-card">
+                            <span class="use-icon">🎮</span>
+                            <h3>Game rounds</h3>
+                            <p>Timed challenges and turns</p>
+                        </div>
+                        <div class="use-card">
+                            <span class="use-icon">🧘</span>
+                            <h3>Meditation</h3>
+                            <p>Peaceful timed sessions</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar Ad -->
+            <aside class="sidebar-ad">
+                <div class="ad-container ad-sticky">
+                    <p class="ad-label">Advertisement</p>
+                    <div class="ad-placeholder ad-vertical">
+                        <p>Ad Slot (Inline 300×250)</p>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <!-- Features Section -->
+        <section class="features">
+            <h2>Why SimpleCountdownTimer?</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Instant Setup</h3>
+                    <p>Click a preset or enter custom time. No account needed.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔒</div>
+                    <h3>100% Private</h3>
+                    <p>Runs entirely in your browser. We don't track or store anything.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📱</div>
+                    <h3>Works Everywhere</h3>
+                    <p>Desktop, tablet, or phone. Always accessible.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Distraction-Free</h3>
+                    <p>Clean interface. No clutter. Just your countdown.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
     <footer>
-      <div>© <span id="year"></span> SimpleCountdownTimer</div>
-      <div class="small">Free online countdown timer</div>
+        <p>&copy; 2026 SimpleCountdownTimer.com | Time it right. ⏱️</p>
+        <div class="footer-links">
+            <a href="privacy.html">Privacy Policy</a>
+            <span>•</span>
+            <a href="terms.html">Terms of Service</a>
+            <span>•</span>
+            <a href="contact.html">Contact</a>
+            <span>•</span>
+            <a href="about.html">About</a>
+        </div>
     </footer>
-  </div>
 
-  <div class="toast" id="toast">Copied!</div>
-
-  <audio id="beep" preload="auto">
-    <source src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAIlYAAESsAAACABAAZGF0YQAAAAA=" type="audio/wav">
-  </audio>
-
-  <script src="./app.js" defer></script>
+    <script src="app.js"></script>
 </body>
 </html>
