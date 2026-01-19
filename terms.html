@@ -2,80 +2,89 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Terms — SimpleCountdownTimer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Terms of Service — SimpleCountdownTimer</title>
   <meta name="description" content="Terms of service for SimpleCountdownTimer." />
-  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
-  <div class="wrap">
-    <header>
-      <div class="brand">
+
+<body class="static-page">
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="index.html" aria-label="Home">
         <div class="logo">⏳</div>
         <div>
-          <div class="brand-title">SimpleCountdownTimer</div>
-          <div class="brand-sub">Fast • Free • No login</div>
+          <div class="title">SimpleCountdownTimer</div>
+          <div class="subtitle">Fast • Free • No login</div>
         </div>
-      </div>
+      </a>
 
-      <nav>
-        <a href="./index.html">Tool</a>
-        <a href="./about.html">About</a>
-        <a href="./contact.html">Contact</a>
-        <a href="./privacy.html">Privacy</a>
-        <a href="./terms.html" aria-current="page">Terms</a>
+      <nav class="nav" aria-label="Primary">
+        <a href="index.html#timer">Tool</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html" aria-current="page">Terms</a>
       </nav>
-    </header>
+    </div>
+  </header>
 
-    <div class="ad top" aria-label="ad-slot">Ad Slot (Top Leaderboard)</div>
-
-    <section class="card">
+  <main class="container">
+    <section class="content-card">
       <h1>Terms of Service</h1>
-      <p class="sub">Last updated: <span id="lastUpdated"></span></p>
+      <p class="muted">Last updated: <span id="lastUpdated"></span></p>
 
-      <div class="small">
-        <h3 style="margin-top:0">Use of the site</h3>
-        <p>
-          SimpleCountdownTimer is provided “as is” for personal and informational use. By using this site,
-          you agree to these terms.
-        </p>
+      <h2>Use of the site</h2>
+      <p>
+        SimpleCountdownTimer is provided “as is” for personal and educational use. You agree to use it lawfully
+        and not to misuse or disrupt the service.
+      </p>
 
-        <h3 style="margin-top:14px">No warranties</h3>
-        <p>
-          We make no guarantees that the timer will be uninterrupted, error-free, or accurate for every device
-          and browser. Do not rely on this timer for safety-critical use cases.
-        </p>
+      <h2>No warranties</h2>
+      <p>
+        We make no guarantees about accuracy, availability, or fitness for a particular purpose. Timers may be
+        affected by device settings, browser limits, or power-saving modes.
+      </p>
 
-        <h3 style="margin-top:14px">Limitation of liability</h3>
-        <p>
-          To the maximum extent permitted by law, we are not liable for any damages arising from use of the site.
-        </p>
+      <h2>Limitation of liability</h2>
+      <p>
+        To the fullest extent allowed by law, SimpleCountdownTimer will not be liable for any indirect or
+        consequential damages related to use of the site.
+      </p>
 
-        <h3 style="margin-top:14px">Changes</h3>
-        <p>
-          We may update these terms from time to time. Continued use of the site means you accept the updated terms.
-        </p>
+      <h2>Changes</h2>
+      <p>
+        We may update these terms from time to time. Continued use of the site means you accept the updated terms.
+      </p>
 
-        <h3 style="margin-top:14px">Contact</h3>
-        <p>
-          Questions? Contact:
-          <a href="mailto:hello@simplecountdowntimer.com">hello@simplecountdowntimer.com</a>
-        </p>
-      </div>
+      <h2>Contact</h2>
+      <p>
+        Questions? Email:
+        <a href="mailto:hello@simplecountdowntimer.com">hello@simplecountdowntimer.com</a>
+      </p>
     </section>
 
-    <footer>
-      <div>© <span id="year"></span> SimpleCountdownTimer</div>
-      <div class="small">Free online countdown timer</div>
+    <footer class="footer">
+      <div class="footer-grid">
+        <div>
+          <strong>SimpleCountdownTimer.com</strong>
+          <p class="muted">Fast timer utility. No accounts. No tracking.</p>
+        </div>
+        <div class="footer-links">
+          <a href="about.html">About</a>
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+      <p class="tiny muted">© <span id="year"></span> SimpleCountdownTimer</p>
     </footer>
-  </div>
+  </main>
 
   <script>
-    const y = document.getElementById("year");
-    if (y) y.textContent = new Date().getFullYear();
-    const lu = document.getElementById("lastUpdated");
-    if (lu) lu.textContent = new Date().toLocaleDateString(undefined, { year:"numeric", month:"long", day:"numeric" });
+    document.getElementById("year").textContent = new Date().getFullYear();
+    document.getElementById("lastUpdated").textContent =
+      new Date().toLocaleDateString(undefined, { year:"numeric", month:"long", day:"numeric" });
   </script>
 </body>
 </html>
-
