@@ -458,6 +458,6 @@ body.static-page .ad-slot {
 
 /* Prevent header/ad from overlapping content */
 main.container{
-  padding-top: 24px;
+  padding-top: 40px;
 }
 
