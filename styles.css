@@ -419,3 +419,39 @@ header.topbar + main.container{
   padding-top: 8px;
 }
 
+/* =========================
+   Static pages (no ads)
+   ========================= */
+
+body.static-page .ad-header,
+body.static-page .ad-slot {
+  display: none !important;
+}
+
+.content-card{
+  background: rgba(255,255,255,.92);
+  border:1px solid rgba(229,231,235,1);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px;
+  margin-top: 10px;
+
+  max-width: 860px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.content-card h1{
+  margin-top:0;
+  font-size: 30px;
+  margin-bottom: 6px;
+}
+
+.content-card h2{
+  margin-top:18px;
+  font-size: 18px;
+}
+
+.content-card p{
+  line-height:1.7;
+}
