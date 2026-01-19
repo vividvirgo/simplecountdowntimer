@@ -13,12 +13,15 @@ const els = {
   pauseBtn: $("pauseBtn"),
   resetBtn: $("resetBtn"),
   fullscreenBtn: $("fullscreenBtn"),
+  presentBtn: $("presentBtn"),
+  timerCard: $("timerCard"),
   copyLinkBtn: $("copyLinkBtn"),
   toggleSoundBtn: $("toggleSoundBtn"),
   toast: $("toast"),
   year: $("year"),
   presets: document.querySelectorAll(".preset"),
 };
+
 
 els.year.textContent = new Date().getFullYear();
 
@@ -226,6 +229,32 @@ async function toggleFullscreen() {
   } catch (_) {}
 }
 
+function isPresentFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("present") === "1") return true;
+  if (window.location.hash && window.location.hash.toLowerCase().includes("present")) return true;
+  return false;
+}
+
+function enterPresentationMode() {
+  document.body.classList.add("present-mode");
+  els.presentBtn.textContent = "Exit Presentation";
+  // Optional: auto fullscreen for maximum effect (comment out if you prefer manual)
+  // if (!document.fullscreenElement) toggleFullscreen();
+}
+
+function exitPresentationMode() {
+  document.body.classList.remove("present-mode");
+  els.presentBtn.textContent = "Presentation Mode";
+}
+
+function togglePresentationMode() {
+  const on = document.body.classList.contains("present-mode");
+  if (on) exitPresentationMode();
+  else enterPresentationMode();
+}
+
+
 function applyQueryPreset() {
   const params = new URLSearchParams(window.location.search);
 
@@ -266,6 +295,8 @@ els.resetBtn.addEventListener("click", resetTimer);
 els.fullscreenBtn.addEventListener("click", toggleFullscreen);
 els.copyLinkBtn.addEventListener("click", copyPresetLink);
 els.toggleSoundBtn.addEventListener("click", toggleSound);
+els.presentBtn.addEventListener("click", togglePresentationMode);
+
 
 els.presets.forEach(btn => {
   btn.addEventListener("click", () => {
@@ -289,6 +320,15 @@ document.addEventListener("keydown", (e) => {
 
   if (typing) return;
 
+  // ESC exits presentation mode
+  if (e.key === "Escape") {
+    if (document.body.classList.contains("present-mode")) {
+      e.preventDefault();
+      exitPresentationMode();
+    }
+    return;
+  }
+
   if (e.code === "Space") {
     e.preventDefault();
     running ? pauseTimer() : startTimer();
@@ -303,6 +343,7 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
+
 // Update fullscreen button label if user exits via ESC
 document.addEventListener("fullscreenchange", () => {
   if (!document.fullscreenElement) {
@@ -315,3 +356,8 @@ document.addEventListener("fullscreenchange", () => {
 /* Init */
 applyQueryPreset();
 updateDisplay();
+
+if (isPresentFromUrl()) {
+  enterPresentationMode();
+}
+
