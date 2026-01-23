@@ -22,8 +22,16 @@ const els = {
   presets: document.querySelectorAll(".preset"),
 };
 
-
 els.year.textContent = new Date().getFullYear();
+
+/** ✅ Title handling (SEO-safe) **/
+const DEFAULT_TITLE = document.title; // uses <title> from HTML
+function setRunningTitle() {
+  document.title = `${formatTime(remainingSeconds)} — Simple Countdown Timer`;
+}
+function restoreTitle() {
+  document.title = DEFAULT_TITLE;
+}
 
 let totalSeconds = 0;
 let remainingSeconds = 0;
@@ -52,7 +60,9 @@ function setStatus(text) {
 
 function updateDisplay() {
   els.timeDisplay.textContent = formatTime(remainingSeconds);
-  document.title = `${formatTime(remainingSeconds)} — Simple Countdown Timer`;
+
+  // ✅ Only change tab title while running (otherwise keep SEO title)
+  if (running) setRunningTitle();
 }
 
 function readInputsToSeconds() {
@@ -74,6 +84,9 @@ function stopTimer() {
   running = false;
   els.startBtn.disabled = false;
   els.pauseBtn.disabled = true;
+
+  // ✅ When not running, restore the SEO-friendly title
+  restoreTitle();
 }
 
 function startTimer() {
@@ -95,8 +108,10 @@ function startTimer() {
   els.pauseBtn.disabled = false;
   setStatus("Running…");
 
-  const startedAt = Date.now();
-  let lastTick = startedAt;
+  // ✅ Set dynamic title immediately on start
+  setRunningTitle();
+
+  let lastTick = Date.now();
 
   timerId = setInterval(() => {
     const now = Date.now();
@@ -124,14 +139,21 @@ function resetTimer() {
   stopTimer();
   totalSeconds = readInputsToSeconds();
   remainingSeconds = totalSeconds;
-  updateDisplay();
+
+  updateDisplay(); // update screen
   setStatus("Ready");
+
+  // ✅ Ensure title is reset (stopTimer already does this, but extra-safe)
+  restoreTitle();
 }
 
 function finishTimer() {
   stopTimer();
   remainingSeconds = 0;
-  updateDisplay();
+
+  // Update the display (timer shows 00:00). Title stays restored because stopTimer() ran.
+  els.timeDisplay.textContent = formatTime(remainingSeconds);
+
   setStatus("Time’s up!");
 
   if (soundEnabled) playAlarm();
@@ -254,7 +276,6 @@ function togglePresentationMode() {
   else enterPresentationMode();
 }
 
-
 function applyQueryPreset() {
   const params = new URLSearchParams(window.location.search);
 
@@ -296,7 +317,6 @@ els.fullscreenBtn.addEventListener("click", toggleFullscreen);
 els.copyLinkBtn.addEventListener("click", copyPresetLink);
 els.toggleSoundBtn.addEventListener("click", toggleSound);
 els.presentBtn.addEventListener("click", togglePresentationMode);
-
 
 els.presets.forEach(btn => {
   btn.addEventListener("click", () => {
@@ -343,7 +363,6 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-
 // Update fullscreen button label if user exits via ESC
 document.addEventListener("fullscreenchange", () => {
   if (!document.fullscreenElement) {
@@ -355,9 +374,13 @@ document.addEventListener("fullscreenchange", () => {
 
 /* Init */
 applyQueryPreset();
-updateDisplay();
+
+// ✅ Ensure initial title is the SEO title
+restoreTitle();
+
+// ✅ Set initial display without changing title
+els.timeDisplay.textContent = formatTime(remainingSeconds);
 
 if (isPresentFromUrl()) {
   enterPresentationMode();
 }
-
